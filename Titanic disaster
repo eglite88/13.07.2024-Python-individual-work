@@ -1,0 +1,114 @@
+Exploratory Data Analysis (EDA):
+Load the Titanic dataset into a Pandas DataFrame.
+Use Pandas methods to explore and understand the dataset:
+Display the first few rows to get an overview of the data structure.
+Check the dimensions of the dataset (number of rows and columns).
+Identify missing values and decide on strategies for handling them.
+Compute basic statistics (e.g., mean, median, min, max) for numerical columns.
+Analyze categorical variables (e.g., value counts).
+__________________________________________________________________________________________
+import pandas as pd
+# Read Titanic data
+train_data = pd.read_csv('train.csv')
+test_data = pd.read_csv('test.csv')
+# Checking first rows of data. 
+# From this overview I can see what kind of data are given about Titanic passengers 
+print(train_data.head())
+print(test_data.head())
+__________________________________________________________________________________________
+
+# Check last lines of data
+# I am getting how many lines are in data about Titanic. 
+df = pd.read_csv('train.csv')
+df = pd.read_csv('test.csv')
+df.tail()
+__________________________________________________________________________________________
+
+# Shorter version how to get line and column count 
+df.shape
+__________________________________________________________________________________________
+
+# Checking info about column name, data types (Dtype), how many values
+# Here I can see how many missing values I have 
+df.info()
+__________________________________________________________________________________________
+
+# From df.info() I see that not all passengers gave their info about Age and Cabin 
+df['Age'].value_counts(dropna=False)
+__________________________________________________________________________________________
+
+df['Cabin'].value_counts(dropna=False)
+__________________________________________________________________________________________
+
+# So this I will DROP Empty values 
+df.dropna() 
+df.dropna(inplace=True) 
+__________________________________________________________________________________________
+
+# Summing statistics 
+df.describe() 
+__________________________________________________________________________________________
+# Summary stats of strings
+df.describe(include='object') 
+__________________________________________________________________________________________
+
+Data Visualization:
+
+Choose one column of the dataset that interests you
+Use Matplotlib pyplot to create a meaningful visualization:
+Select an appropriate plot type (e.g., bar chart, histogram, pie chart).
+Label axes, add a title.
+Ensure the visualization is clear, informative, and visually appealing. smile
+Submission:
+
+You can include code snippets, comments explaining your thought process
+Submit your completed assignment 
+__________________________________________________________________________________________
+
+#Checking how much people survived 
+survived_count = train_data['Survived'].sum()
+print(survived_count)
+__________________________________________________________________________________________
+
+# Checking how much people survived based by gender
+
+survival_by_gender = train_data.groupby('Sex')['Survived'].sum()
+print(survival_by_gender)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data1 = {'Category': ['Male', 'Female'], 'Values': [109, 233]}
+df1 = pd.DataFrame(data1)
+df1
+
+plt.pie(df1['Values'], labels = df1['Category'], autopct= '%1.1f%%')
+plt.title('People who survived in Titanic tragedy based by gender')
+plt.show()
+__________________________________________________________________________________________
+
+# Cabin
+cabin = train_data.groupby('Cabin').sum()
+print(cabin)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+test_data = pd.read_csv('test.csv')
+
+cabin = test_data['Cabin'].value_counts().reset_index()
+cabin.columns = ['Cabin types', 'Count']
+
+cabin_options = cabin.iloc[:10]
+
+cabin_options.plot(kind='barh', x='Cabin types', y='Count', color='skyblue')
+plt.title('Cabin options in Titanic')
+plt.xlabel('Pasenger amount stayed')
+plt.ylabel('Cabin types')
+plt.show()
+__________________________________________________________________________________________
+
+
+
+
+
